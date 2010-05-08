@@ -55,3 +55,10 @@ endfunction
 "Remap the tab key to select action with InsertTabWrapper
 inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
 
+" markdown syntax settings
+    augroup mkd
+        autocmd BufNewFile,BufRead *.mkd set ai formatoptions=tcroqn2 comments=n:>
+        autocmd BufNewFile,BufRead *.mkd set wrap nonumber
+    augroup END
+
+
