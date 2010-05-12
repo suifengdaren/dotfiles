@@ -7,6 +7,7 @@ colorscheme desertEX
 set nocompatible
 set number
 filetype on
+filetype plugin on
 filetype indent on
 syntax on
 set autoindent
@@ -29,19 +30,19 @@ set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,gb18030,gbk,gb2312,cp936 
 
-"set vim tabs
+" set vim tabs
 autocmd FileType html,python,vim,javascript setl shiftwidth=4
 autocmd FileType html,python,vim,javascript setl tabstop=4
 autocmd FileType java,php setl shiftwidth=4
 autocmd FileType java,php setl tabstop=4
 
-"set gui options
+" set gui options
 if has("gui_running")
-"set guifont= YaHei Consolas Hybrid:h12
+" set guifont= YaHei Consolas Hybrid:h12
 set guifont=Consolas:h11
 endif
 
-"set php funtion auto completion
+" set php funtion auto completion
 set dictionary+=$VIM/ExtraVim/php_funclist.txt
 set complete+=k
 function! InsertTabWrapper()
@@ -52,7 +53,7 @@ function! InsertTabWrapper()
         return "\<C-N>"
     endif
 endfunction
-"Remap the tab key to select action with InsertTabWrapper
+" Remap the tab key to select action with InsertTabWrapper
 inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
 
 " markdown syntax settings
@@ -60,5 +61,15 @@ inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
         autocmd BufNewFile,BufRead *.mkd set ai formatoptions=tcroqn2 comments=n:>
         autocmd BufNewFile,BufRead *.mkd set wrap nonumber
     augroup END
-
-
+" set fuzzyfinder preview height
+nnoremap <C-p> :FufFile <CR>
+let g:fuf_previewHeight=0 
+" bufexplorer setting
+let g:bufExplorerDefaultHelp=0       " Do not show default help. 
+let g:bufExplorerShowRelativePath=1  " Show relative paths. 
+let g:bufExplorerSortBy='mru'        " Sort by most recently used. 
+let g:bufExplorerSplitRight=0        " Split left. 
+let g:bufExplorerSplitVertical=1     " Split vertically. 
+let g:bufExplorerSplitVertSize = 30  " Split width 
+let g:bufExplorerUseCurrentWindow=1  " Open in new window. 
+autocmd BufWinEnter \[Buf\ List\] setl nonumber 
