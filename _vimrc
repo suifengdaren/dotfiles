@@ -1,7 +1,20 @@
-set langmenu=zh_CN.GBK
-set imcmdline
+set langmenu=zh_CN
+set encoding=utf-8
+set fileencodings=utf-8,chinese,latin-1
+if has("win32")
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+    set fileencoding=chinese
+else 
+    set fileencoding=utf-8
+endif
+"解决菜单乱码
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
+"解决consle输出乱码
+language messages zh_CN.utf-8
+set imcmdline
+"设定_vimrc即时生效
 autocmd! bufwritepost _vimrc source %
 colorscheme desertEX
 set nocompatible
@@ -26,9 +39,9 @@ set hls
 set wrap
 set linebreak
 set backspace=indent,eol,start
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8,gb18030,gbk,gb2312,cp936 
+"set encoding=utf-8
+"set fileencoding=utf-8
+"set fileencodings=utf-8,gb18030,gbk,gb2312,cp936 
 
 " set vim tabs
 autocmd FileType html,python,vim,javascript setl shiftwidth=4
@@ -42,9 +55,16 @@ if has("gui_running")
 set guifont=Consolas:h11
 endif
 
-" set php funtion auto completion
-set dictionary+=$VIM/ExtraVim/php_funclist.txt
-set complete+=k
+" beging php funtion auto completion setting
+au FileType php call Php_func_autocomp()
+function Php_func_autocomp()
+    set dictionary+=$VIM\ExtraVim\php-funclist.txt
+    set complete+=k
+endfunction
+"Auto completion using the TAB key
+"This function determines, wether we are on
+"the start of the line text(then tab indents)
+"or if we want to try auto completion
 function! InsertTabWrapper()
     let col=col('.')-1
     if !col || getline('.')[col-1] !~ '\k'
@@ -55,6 +75,7 @@ function! InsertTabWrapper()
 endfunction
 " Remap the tab key to select action with InsertTabWrapper
 inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
+"end php funtion auto completion setting 
 
 " markdown syntax settings
     augroup mkd
@@ -73,3 +94,6 @@ let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width 
 let g:bufExplorerUseCurrentWindow=1  " Open in new window. 
 autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+" NERDTree setting
+map <F3> :NERDTreeToggle<CR>
+
